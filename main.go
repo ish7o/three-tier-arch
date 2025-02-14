@@ -125,8 +125,6 @@ type User struct {
 }
 
 func (us *UserStore) NewId() int {
-    us.Lock()
-    defer us.Unlock()
 	us.nextId += 1
 	return us.nextId
 }
