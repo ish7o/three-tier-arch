@@ -2,21 +2,24 @@ package main
 
 import (
 	"testing"
+	"three-tier-arch/models"
+	"three-tier-arch/store"
 	"time"
 )
 
 // Rawr
 var (
-	testInputA = UserInput{FirstName: "Ada", LastName: "Lovelace", BirthYear: 1815, Group: "premium"}
-	testInputB = UserInput{FirstName: "Brian", LastName: "Kernighan", BirthYear: 1942, Group: "user"}
-	testInputC = UserInput{FirstName: "Clifford", LastName: "Cocks", BirthYear: 1950, Group: "admin"}
+	testInputA = models.UserInput{FirstName: "Ada", LastName: "Lovelace", BirthYear: 1815, Group: "premium"}
+	testInputB = models.UserInput{FirstName: "Brian", LastName: "Kernighan", BirthYear: 1942, Group: "user"}
+	testInputC = models.UserInput{FirstName: "Clifford", LastName: "Cocks", BirthYear: 1950, Group: "admin"}
 )
 
 func TestUserStore(t *testing.T) {
-	store := NewUserStore()
 
 	// GET /users & POST /users
 	t.Run("GetAllUsers", func(t *testing.T) {
+        store := store.NewUserStore()
+
 		users := store.GetAllUsers()
 		if len(users) != 0 {
 			t.Errorf("Expected empty store, got %d users", len(users))
@@ -46,7 +49,7 @@ func TestUserStore(t *testing.T) {
 
 	// GET /users/<id>
 	t.Run("GetUser", func(t *testing.T) {
-		store := NewUserStore()
+		store := store.NewUserStore()
 		_, err := store.GetUser(1)
 		if err == nil {
 			t.Error("Expected error for non-existent user")
@@ -76,7 +79,7 @@ func TestUserStore(t *testing.T) {
 
 	// PATCH /users/<id>
 	t.Run("UpdateUser", func(t *testing.T) {
-		store := NewUserStore()
+		store := store.NewUserStore()
 
 		user, _ := store.CreateUser(testInputB)
 		store.UpdateUser(user.Id, testInputC)
@@ -91,7 +94,7 @@ func TestUserStore(t *testing.T) {
 
 	// DELETE /users/<id>
 	t.Run("DeleteUser", func(t *testing.T) {
-		store := NewUserStore()
+		store := store.NewUserStore()
 
 		user, _ := store.CreateUser(testInputC)
 		err := store.DeleteUser(user.Id)

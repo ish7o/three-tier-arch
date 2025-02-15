@@ -1,3 +1,3 @@
-module three_tier_arch
+module three-tier-arch
 
 go 1.23.4
