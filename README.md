@@ -1,17 +1,26 @@
-# User Management API ✨
+go > python
+`if err != nil` my beloved and try/except just sucks
+go has actual concurrency
+static typing
+can't cast a `Toyota Yaris 2009` to a `string` sorry
+GIL sucks
+compiled
+IndentationError
+interfaces, structs
+simplicity
+batteries not included
 
-welcome to my smol user management API written in Go~
 
-## what does it do? uwu
+## uwu
 
 this API manages user data through these endpoints:
 - `GET /users` - shows all users
 - `GET /users/<id>` - peeks at one specific user
 - `POST /users` - adds a new user to our database
 - `PATCH /users/<id>` - updates user info
-- `DELETE /users/<id>` - removes a user (pls don't, they're all precious)
+- `DELETE /users/<id>` - removes a user
 
-## user model ⭐️
+## ⭐️
 
 when creating a new user:
 ```json
@@ -34,9 +43,4 @@ when getting them back:
 }
 ```
 
-## running this bby~
-
-1. clone this repo
-2. `go run main.go` and watch the magic happen ✨
-
-made with <3 in Go because python is too mainstream
+made with <3 in neovim on arch linux in Go because python is too mainstream
