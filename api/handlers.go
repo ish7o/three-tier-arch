@@ -6,23 +6,23 @@ import (
 	"strconv"
 	"strings"
 	"three-tier-arch/models"
-	"three-tier-arch/store"
+	"three-tier-arch/service"
 )
 
 type UserHandler struct {
-	store *store.UserStore
+	service *service.UserService
 }
 
-func NewUserHandler(store *store.UserStore) *UserHandler {
+func NewUserHandler(service *service.UserService) *UserHandler {
 	return &UserHandler{
-		store: store,
+		service: service,
 	}
 }
 
 func (uh *UserHandler) HandleUsers(w http.ResponseWriter, r *http.Request) {
 	switch r.Method {
 	case "GET":
-		users := uh.store.GetAllUsers()
+		users := uh.service.GetAllUsers()
 		w.Header().Set("Content-Type", "application/json")
 		json.NewEncoder(w).Encode(users)
 
@@ -32,7 +32,7 @@ func (uh *UserHandler) HandleUsers(w http.ResponseWriter, r *http.Request) {
 			http.Error(w, "invalid input sowwy", http.StatusBadRequest)
 			return
 		}
-		user, err := uh.store.CreateUser(input)
+		user, err := uh.service.CreateUser(input)
 		if err != nil {
 			http.Error(w, err.Error(), http.StatusBadRequest)
 			return
@@ -55,7 +55,7 @@ func (uh *UserHandler) HandleUser(w http.ResponseWriter, r *http.Request) {
 	}
 	switch r.Method {
 	case "GET":
-		user, err := uh.store.GetUser(id)
+		user, err := uh.service.GetUser(id)
 		if err != nil {
 			http.Error(w, err.Error(), http.StatusNotFound)
 			return
@@ -71,7 +71,7 @@ func (uh *UserHandler) HandleUser(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 
-		user, err := uh.store.UpdateUser(id, input)
+		user, err := uh.service.UpdateUser(id, input)
 		if err != nil {
 			http.Error(w, err.Error(), http.StatusBadRequest)
 			return
@@ -81,7 +81,7 @@ func (uh *UserHandler) HandleUser(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusOK)
 		json.NewEncoder(w).Encode(user)
 	case "DELETE":
-		err := uh.store.DeleteUser(id)
+		err := uh.service.DeleteUser(id)
 		if err != nil {
 			http.Error(w, err.Error(), http.StatusNotFound)
 			return

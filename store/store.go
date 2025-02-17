@@ -32,10 +32,6 @@ func (us *UserStore) GetUser(id int) (*models.User, error) {
 }
 
 func (us *UserStore) UpdateUser(id int, input models.UserInput) (*models.User, error) {
-    if err := input.IsValid(); err != nil {
-        return nil, fmt.Errorf("invalid user input: %w", err)
-    }
-
     us.Lock()
     defer us.Unlock()
 
@@ -71,10 +67,6 @@ func (us *UserStore) DeleteUser(id int) error {
 }
 
 func (us *UserStore) CreateUser(input models.UserInput) (*models.User, error) {
-    if err := input.IsValid(); err != nil {
-        return nil, fmt.Errorf("invalid user input: %w", err)
-    }
-
 	age := time.Now().Year() - input.BirthYear
 	us.Lock()
 	defer us.Unlock()

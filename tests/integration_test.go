@@ -9,12 +9,14 @@ import (
 	"testing"
 	"three-tier-arch/api"
 	"three-tier-arch/models"
+	"three-tier-arch/service"
 	"three-tier-arch/store"
 )
 
 func TestIntegration(t *testing.T) {
-    store := store.NewUserStore()
-    handler := api.NewUserHandler(store)
+	store := store.NewUserStore()
+    service := service.NewUserService(store)
+    handler := api.NewUserHandler(service)
 
     t.Run("Create and Get user and users", func(t *testing.T) {
         // make a user
